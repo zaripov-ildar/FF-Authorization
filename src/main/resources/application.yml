@@ -1,1 +1,17 @@
+server:
+  port: 8100
 
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: password
+    username: username
+    url: jdbc:postgresql://localhost:5432/ff_auth
+  jpa:
+    database: postgresql
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    locations: classpath:migration
