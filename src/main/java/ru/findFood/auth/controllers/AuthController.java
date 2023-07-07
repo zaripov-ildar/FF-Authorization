@@ -12,6 +12,8 @@ import ru.findFood.auth.dtos.AuthenticationRequest;
 import ru.findFood.auth.dtos.AuthenticationResponse;
 import ru.findFood.auth.services.AuthenticationService;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping("/refreshJWT")
-    public void refreshJWT(HttpServletRequest request, HttpServletResponse response) {
+    public void refreshJWT(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
     }
 }
