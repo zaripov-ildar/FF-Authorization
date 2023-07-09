@@ -14,4 +14,13 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
-    locations: classpath:migration
+    baselineOnMigrate: true
+    locations: classpath:db.migration
+
+security_params:
+  clientRole: "CLIENT"
+  restaurantRole: "RESTAURANT"
+  secret_key: "3979244226452948404D635166546A576E5A7234753778214125432A462D4A61"
+  expiration:
+    jwt: 3600000 # hour
+    rt: 604800000 # week
