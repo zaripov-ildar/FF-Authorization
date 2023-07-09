@@ -20,3 +20,7 @@ CREATE TABLE IF NOT EXISTS user_role
     user_id bigint REFERENCES auth_user (id),
     role_id bigint REFERENCES _role (id)
 );
+
+INSERT INTO _role(title)
+VALUES ('CLIENT'),
+        ('RESTAURANT');

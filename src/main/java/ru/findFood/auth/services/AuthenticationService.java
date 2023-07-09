@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationService {
     private final JwtUtils jwtUtils;
     private final PersonService personService;
@@ -78,9 +80,11 @@ public class AuthenticationService {
     }
 
     private AuthenticationResponse register(AuthenticationRequest request, String role) {
+
+
         Role roleClient = roleRepository.findByTitle(role)
-                .orElse(new Role(role));
-        roleRepository.save(roleClient);
+                .orElseThrow(()->new RuntimeException(role + " role not exist!"));
+//        roleRepository.save(roleClient);
 
         if (personService.isExistByEmail(request.email())) {
             throw new EmailAlreadyExists(request.email());

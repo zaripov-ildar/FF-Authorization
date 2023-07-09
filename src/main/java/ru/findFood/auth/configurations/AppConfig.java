@@ -18,7 +18,7 @@ import ru.findFood.auth.repositories.AuthUserRepository;
 public class AppConfig {
 
     private final AuthUserRepository repository;
-
+//
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

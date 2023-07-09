@@ -3,6 +3,7 @@ package ru.findFood.auth.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,26 +18,31 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
     private final AuthenticationService service;
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+        log.warn("auth");
         return ResponseEntity.ok(service.authenticate(request));
     }
 
     @PostMapping("/register/user")
     public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody AuthenticationRequest request) {
+        log.warn("user");
         return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/register/restaurant")
     public void registerRestaurant(@RequestBody AuthenticationRequest request) {
+        log.warn("rest");
         service.registerRestaurant(request);
     }
 
     @PostMapping("/refreshJWT")
     public void refreshJWT(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.warn("refresh");
         service.refreshToken(request, response);
     }
 }

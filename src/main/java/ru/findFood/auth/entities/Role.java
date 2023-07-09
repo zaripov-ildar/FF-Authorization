@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "_role")
 @Getter
@@ -17,7 +19,19 @@ public class Role extends BaseEntity {
     @JsonBackReference
     private String title;
 
+    @ManyToMany(mappedBy = "roles")
+    public List<AuthUser> users;
+
     public Role(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "title='" + title + '\'' +
+                ", users=" + users +
+                ", id=" + getId() +
+                '}';
     }
 }
