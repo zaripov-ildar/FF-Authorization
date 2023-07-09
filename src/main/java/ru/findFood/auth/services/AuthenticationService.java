@@ -81,7 +81,6 @@ public class AuthenticationService {
 
     private AuthenticationResponse register(AuthenticationRequest request, String role) {
 
-
         Role roleClient = roleRepository.findByTitle(role)
                 .orElseThrow(()->new RuntimeException(role + " role not exist!"));
 //        roleRepository.save(roleClient);
