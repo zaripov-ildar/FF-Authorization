@@ -24,25 +24,21 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        log.warn("auth");
         return ResponseEntity.ok(service.authenticate(request));
     }
 
     @PostMapping("/register/user")
     public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody AuthenticationRequest request) {
-        log.warn("user");
         return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/register/restaurant")
     public void registerRestaurant(@RequestBody AuthenticationRequest request) {
-        log.warn("rest");
         service.registerRestaurant(request);
     }
 
     @PostMapping("/refreshJWT")
     public void refreshJWT(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.warn("refresh");
         service.refreshToken(request, response);
     }
 }
