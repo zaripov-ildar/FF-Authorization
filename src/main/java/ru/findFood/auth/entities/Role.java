@@ -26,6 +26,7 @@ public class Role extends BaseEntity {
         this.title = title;
     }
 
+
     @Override
     public String toString() {
         return "Role{" +

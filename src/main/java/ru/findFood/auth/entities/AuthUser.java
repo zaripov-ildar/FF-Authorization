@@ -32,6 +32,10 @@ public class AuthUser extends BaseEntity implements UserDetails {
     @JsonManagedReference
     private List<Role> roles;
 
+    public Integer getSizeRoles() {
+        return roles.size();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles()

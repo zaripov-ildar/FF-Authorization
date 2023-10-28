@@ -22,4 +22,8 @@ public class GlobalExceptionsHandler {
     public ResponseEntity<AppException> handleSignatureException(WrongJwtException e) {
         return new ResponseEntity<>(new AppException("TOTALLY_BOGUS_JWT", e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
+    @ExceptionHandler
+    public ResponseEntity<AppException> handleResourceNotFoundException(ResourceNotFoundException e) {
+        return new ResponseEntity<>(new AppException(HttpStatus.NOT_FOUND.toString(), e.getMessage()), HttpStatus.NOT_FOUND);
+    }
 }

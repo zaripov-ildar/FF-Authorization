@@ -1,25 +1,45 @@
 server:
   port: 8100
+  servlet:
+    context-path: /ff-auth
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    password: password
-    username: username
-    url: jdbc:postgresql://localhost:5432/ff_auth
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:findfoodDB;MODE=PostgreSQL
+    username: sa
+    password:
+
   jpa:
-    database: postgresql
+    show-sql: true
     properties:
       hibernate:
-        format_sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  flyway:
-    baselineOnMigrate: true
-    locations: classpath:db.migration
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: none
+        temp:
+          use_jdbc_metadata_defaults: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: false
+
+integrations:
+  connect-timeout: 5000
+  read-timeout: 10000
+  write-timeout: 5000
+  person-service:
+    url: http://localhost:8188/ff-personal
+  restaurants-service:
+    url: http://localhost:8189/ff-restaurants
+    querySize: 30
 
 security_params:
   clientRole: "CLIENT"
+  nutritionistRole: "NUTRITIONIST"
   restaurantRole: "RESTAURANT"
+  adminRole: "ADMIN"
   secret_key: "3979244226452948404D635166546A576E5A7234753778214125432A462D4A61"
   expiration:
     jwt: 3600000 # hour

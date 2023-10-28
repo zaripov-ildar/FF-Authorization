@@ -4,13 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.findFood.auth.dtos.AuthenticationRequest;
-import ru.findFood.auth.dtos.AuthenticationResponse;
+import ru.findFood.auth.dtos.*;
+import ru.findFood.auth.exceptions.AppError;
 import ru.findFood.auth.services.AuthenticationService;
 
 import java.io.IOException;
@@ -28,13 +29,17 @@ public class AuthController {
     }
 
     @PostMapping("/register/user")
-    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(service.register(request));
+    public ResponseEntity<?> registerUser(@RequestBody RegUserRequest request) {
+        return service.register(request);
     }
 
     @PostMapping("/register/restaurant")
-    public void registerRestaurant(@RequestBody AuthenticationRequest request) {
-        service.registerRestaurant(request);
+    public ResponseEntity<?> registerRestaurant(@RequestBody RegRestaurantRequest request) {
+        try {
+            return service.registerRestaurant(request);
+        } catch (AppError e){
+            return new ResponseEntity<>(new AppError(e.getStatus(), e.getMessage()), HttpStatusCode.valueOf(e.getStatus()));
+        }
     }
 
     @PostMapping("/refreshJWT")
